@@ -31,8 +31,6 @@ class CustomerControllerIntegrationTest {
     @Autowired
     CustomerMapper customerMapper;
 
-    @Autowired
-    private BeerRepository beerRepository;
 
     @Test
     void testDeleteNotFound() {
@@ -48,7 +46,7 @@ class CustomerControllerIntegrationTest {
         ResponseEntity responseEntity = customerController.deleteById(customer.getId());
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
 
-        assertThat(beerRepository.findById(customer.getId())).isEmpty();
+        assertThat(customerRepository.findById(customer.getId())).isEmpty();
 
 
 //        Customer foundCustomer = customerRepository.findById(customer.getId()).get();

@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 public class CustomerServiceJPA implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
-    private final BeerRepository beerRepository;
 
     @Override
     public List<CustomerDTO> getAllCustomer() {
@@ -31,9 +30,9 @@ public class CustomerServiceJPA implements CustomerService {
     }
 
     @Override
-    public Optional<CustomerDTO> getCustomerById(UUID id) {
+    public Optional<CustomerDTO> getCustomerById(UUID customerId) {
         return Optional.ofNullable(customerMapper
-                .customerToCustomerDto(customerRepository.findById(id).orElse(null)));
+                .customerToCustomerDto(customerRepository.findById(customerId).orElse(null)));
     }
 
     @Override
@@ -60,8 +59,8 @@ public class CustomerServiceJPA implements CustomerService {
 
     @Override
     public Boolean deleteById(UUID customerId) {
-        if (beerRepository.existsById(customerId)) {
-            beerRepository.deleteById(customerId);
+        if (customerRepository.existsById(customerId)) {
+            customerRepository.deleteById(customerId);
             return true;
         }
         return false;
