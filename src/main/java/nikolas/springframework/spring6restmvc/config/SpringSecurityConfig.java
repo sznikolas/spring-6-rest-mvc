@@ -12,11 +12,11 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
+                .requestMatchers("/v3/api-docs**", "/swagger-ui/**",
+                        "/swagger-ui.html")
+                .permitAll()
                 .anyRequest().authenticated()
-//                .and().httpBasic(Customizer.withDefaults())
                 .and().oauth2ResourceServer().jwt();
-//                .csrf().ignoringRequestMatchers("/api/**");
         return http.build();
     }
-
 }
